@@ -1,7 +1,11 @@
 package legal_char;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Created by yui on 23/12/2014.
@@ -16,7 +20,10 @@ public class Controller {
         String defaultPath = new Scanner(System.in).nextLine();
         while(true){
             System.out.println("path?");
-            String path = defaultPath + new Scanner(System.in).nextLine() + ".html";
+            String path = defaultPath + new Scanner(System.in).nextLine();
+            List<String> pathList = Arrays.asList(path.split(Pattern.quote("/")));
+            String title = pathList.get(pathList.size() - 1);
+            path += ".html";
             System.out.println("url?");
             String url = new Scanner(System.in).nextLine();
 
