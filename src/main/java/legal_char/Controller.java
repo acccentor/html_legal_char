@@ -40,5 +40,10 @@ public class Controller {
     }
     public static void main(String args[]){
         new Controller();
+        /*
+        FindReplace replace;
+        replace = new FindReplace("src/main/resources/legal_chars.txt");
+        replace.replaceChars(new File("D:/google_drive/Dropbox/books/LN/ID – The Greatest Fusion Fantasy/japtem/id_ch-3.html"));
+        */
     }
 }

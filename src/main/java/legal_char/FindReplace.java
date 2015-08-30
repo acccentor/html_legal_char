@@ -36,7 +36,7 @@ public class FindReplace {
 //        }
         List<String> fileAsString = new ArrayList<String>();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "Cp1252"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 for (List<String> replacePar : replaceCharsList) {
                     line = line.replaceAll(replacePar.get(0), replacePar.get(1));
@@ -55,7 +55,7 @@ public class FindReplace {
 
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "Cp1252"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -85,7 +85,7 @@ public class FindReplace {
 		 List<String> tempReplacePar;
 		 try {
 //            BufferedReader br = new BufferedReader(new FileReader(replaceCharsPath));
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(replaceCharsPath), "Cp1252"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(replaceCharsPath), "UTF-8"));
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 if (!line.equals("")){
 					tempReplacePar = Arrays.asList(line.split("\\s+"));

@@ -17,7 +17,8 @@ public class Download_html {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 //        BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "Cp1252"));
+        //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "Cp1252"));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "UTF-8"));
 
         String inputLine;
         while ((inputLine = in.readLine()) != null){
@@ -38,7 +39,7 @@ public class Download_html {
 
     public static void main(String args[]){
         try {
-            Download_html.download_html("outputfile.txt", "http://baka-tsuki.org/project/index.php?title=Mushoku_Tensei:Web_Chapter_229");
+            Download_html.download_html("D:/google_drive/Dropbox/books/LN/test_project/test_ch-002.html", "https://shinsoritranslations.wordpress.com/2015/07/23/logged-into-a-different-world/");
         } catch (Exception e) {
             e.printStackTrace();
         }
