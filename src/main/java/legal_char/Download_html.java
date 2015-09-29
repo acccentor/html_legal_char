@@ -10,12 +10,11 @@ import java.util.*;
  */
 public class Download_html {
 
-    public static File download_html(String path, String url) throws Exception {
+    public static File download_html(String path, String urlString) throws Exception {
 
 
-        URL oracle = new URL(url);
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(oracle.openStream()));
+        URL url = new URL(urlString);
+        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 //        BufferedWriter writer = new BufferedWriter(new FileWriter(path));
         //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "Cp1252"));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "UTF-8"));
