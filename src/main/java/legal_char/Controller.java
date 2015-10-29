@@ -1,11 +1,11 @@
 package legal_char;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
+import java.awt.*;
+import java.awt.datatransfer.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 /**
  * Created by yui on 23/12/2014.
@@ -16,6 +16,8 @@ public class Controller {
     private boolean autoDL = true;
     private boolean autoPath = true;
     private int autoDLNr = -1;
+    private Clipboard c;
+    private boolean firstRun;
 
     public Controller() {
 
@@ -37,7 +39,7 @@ public class Controller {
                 File file = Download_html.download_html(path, url);
                 replace.replaceChars(file);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
 
         }
@@ -81,11 +83,44 @@ public class Controller {
         if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
             this.autoDL = false;
         }
+        else{
+            c = Toolkit.getDefaultToolkit().getSystemClipboard();
+        }
     }
 
     private String auto_dl(){
+        String clipboard_new = " ";
+        String clipboard_old = "wertyuiasdfklbcjoidfad";
+        this.firstRun = true;
 
-        return null;
+        while (true) {
+            Transferable t = c.getContents(null);
+            if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                try {
+                    clipboard_new = (String) t.getTransferData(DataFlavor.stringFlavor);
+//                    clipboard_new = StringEscapeUtils.escapeJava(clipboardTemp);
+                } catch (Exception e) {
+//                    e.printStackTrace();
+                }
+            }
+
+            if (!firstRun) {
+//                System.out.println(clipboard_new + ", " + clipboard_old);
+                if (!clipboard_new.equals(clipboard_old)) {
+                    return clipboard_new;
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                this.firstRun = false;
+                clipboard_old = clipboard_new;
+            }
+
+        }
     }
 
     private String auto_path(String defaultPath){
@@ -117,14 +152,8 @@ public class Controller {
         return path;
     }
 
-
-
-    public static void main(String args[]){
+    static public void main(String[] args){
         new Controller();
-        /*
-        FindReplace replace;
-        replace = new FindReplace("src/main/resources/legal_chars.txt");
-        replace.replaceChars(new File("D:/google_drive/Dropbox/books/LN/ID – The Greatest Fusion Fantasy/japtem/id_ch-3.html"));
-        */
     }
+
 }
