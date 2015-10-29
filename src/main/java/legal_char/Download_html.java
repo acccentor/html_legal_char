@@ -1,9 +1,8 @@
 package legal_char;
 
 import java.io.*;
-import java.io.*;
 import java.net.URL;
-import java.util.*;
+
 
 /**
  * Created by yui on 24/01/2015.
@@ -15,8 +14,6 @@ public class Download_html {
 
         URL url = new URL(urlString);
         BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-//        BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-        //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "Cp1252"));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "UTF-8"));
 
         String inputLine;
