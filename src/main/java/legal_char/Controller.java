@@ -92,7 +92,7 @@ public class Controller {
         String clipboard_new = " ";
         String clipboard_old = "wertyuiasdfklbcjoidfad";
         this.firstRun = true;
-
+        System.out.println("Listening for chapter " + this.autoDLNr);
         while (true) {
             Transferable t = c.getContents(null);
             if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
@@ -127,13 +127,15 @@ public class Controller {
         String path = "";
         if (this.autoDLNr < 0){
             String input;
-            System.out.println("First chapter number? (Y/n):");
+            System.out.println("First chapter number?:");
             input = new Scanner(System.in).nextLine();
             this.autoDLNr = Integer.parseInt(input);
         }
+        else{
+            this.autoDLNr ++;
+        }
 
         path = defaultPath + String.format("%03d", this.autoDLNr) + ".html";
-        this.autoDLNr += 1;
 
         return path;
     }
