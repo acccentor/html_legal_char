@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Controller {
 
     private FindReplace replace;
-    private boolean autoDL = true;
+    private boolean autoDL = false;
     private boolean autoPath = true;
     private int autoDLNr = -1;
     private Clipboard c;
@@ -78,10 +78,10 @@ public class Controller {
             this.autoPath = false;
         }
 
-        System.out.print("Assisted download? (Y/n): ");
+        System.out.print("Assisted download? (y/N): ");
         input = new Scanner(System.in).nextLine();
-        if (input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
-            this.autoDL = false;
+        if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
+            this.autoDL = true;
         }
         else{
             c = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -110,7 +110,7 @@ public class Controller {
                     return clipboard_new;
                 }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
