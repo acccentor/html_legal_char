@@ -82,8 +82,6 @@ public class Controller {
         input = new Scanner(System.in).nextLine();
         if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
             this.autoDL = true;
-        }
-        else{
             c = Toolkit.getDefaultToolkit().getSystemClipboard();
         }
     }
@@ -92,7 +90,7 @@ public class Controller {
         String clipboard_new = " ";
         String clipboard_old = "wertyuiasdfklbcjoidfad";
         this.firstRun = true;
-        System.out.println("Listening for chapter " + this.autoDLNr);
+//        System.out.println("Listening for chapter " + this.autoDLNr);
         while (true) {
             Transferable t = c.getContents(null);
             if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
@@ -133,6 +131,7 @@ public class Controller {
         }
         else{
             this.autoDLNr ++;
+            System.out.println("Chapter: " + this.autoDLNr);
         }
 
         path = defaultPath + String.format("%03d", this.autoDLNr) + ".html";
