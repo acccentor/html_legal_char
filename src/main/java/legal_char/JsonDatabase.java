@@ -4,34 +4,41 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by yui on 11/12/2015.
  */
 public class JsonDatabase {
     JSONObject db;
-    ArrayList<LNEntry> entries;
 
     public JsonDatabase(){
         db = new JSONObject();
-        entries = new ArrayList<LNEntry>();
+        readDBFile();
     }
 
     public void addEntry(LNEntry entry){
-        if (!entries.contains(entry)){
-            entries.add(entry);
+        if (!db.has(entry.getName())){
             db.put(entry.getName(), new JSONObject(entry));
         }
 
     }
 
     public void editEntry(LNEntry entry){
-        entries.add(entry);
         db.put(entry.getName(), new JSONObject(entry));
     }
 
-    public String searchKeys(String search){
-        return "not implemented";
+    public ArrayList<String> searchKeys(String search){
+        ArrayList<String> returnList = new ArrayList<String>();
+        Iterator<String> keys = db.keys();
+        while (keys.hasNext()){
+            String key = keys.next();
+            if (key.contains(search)){
+                returnList.add(key);
+            }
+        }
+        return returnList;
     }
 
     public LNEntry getEntry(String key){
@@ -64,7 +71,11 @@ public class JsonDatabase {
         }
     }
 
-    public JSONObject readDBFile(){
+    public void readDBFile(){
+        this.db = returnReadDBFile();
+    }
+
+    public JSONObject returnReadDBFile(){
         JSONObject returnValue = null;
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/resources/db.txt"), "UTF-8"));
@@ -87,7 +98,6 @@ public class JsonDatabase {
         a.addEntry(b);
         a.addEntry(c);
         a.writeToFile();
-        System.out.println(a.readDBFile().toString());
     }
 }
 

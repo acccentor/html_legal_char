@@ -3,12 +3,12 @@ package legal_char;
 public class LNEntry{
     private String name;
     private String path;
-    private String currentChapter;
+    private String nextChapter;
 
-    public LNEntry(String name, String path, String currentChapter){
+    public LNEntry(String name, String path, String nextChapter){
         this.name = name;
         this.path = path;
-        this.currentChapter = currentChapter;
+        this.nextChapter = nextChapter;
     }
 
     public String getPath() {
@@ -27,11 +27,11 @@ public class LNEntry{
         this.name = name;
     }
 
-    public String getCurrentChapter() {
-        return currentChapter;
+    public String getNextChapter() {
+        return nextChapter;
     }
 
-    public void setCurrentChapter(String currentChapter) {
-        this.currentChapter = currentChapter;
+    public void setNextChapter(String nextChapter) {
+        this.nextChapter = nextChapter;
     }
 }

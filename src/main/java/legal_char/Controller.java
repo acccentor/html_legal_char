@@ -1,10 +1,8 @@
 package legal_char;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import java.awt.*;
 import java.awt.datatransfer.*;
-import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -18,15 +16,17 @@ public class Controller {
     private int autoDLNr = -1;
     private Clipboard c;
     private boolean firstRun;
+    private JsonDatabase db = new JsonDatabase();
+    private LNEntry currentLN;
 
     public Controller() {
 
+        currentLN = getDBEntry();
         askForAuto();
 
-        replace = new FindReplace("src/main/resources/legal_chars.txt");
+//        replace = new FindReplace("src/main/resources/legal_chars.txt");
 
-        System.out.println("default path?");
-        String defaultPath = new Scanner(System.in).nextLine();
+        String defaultPath = currentLN.getPath();
         String path;
         String url;
 
@@ -36,9 +36,87 @@ public class Controller {
             url = generateUrl();
 
             (new ThreadController(path, url)).run();
+            if (autoPath){
+                currentLN.setNextChapter(Integer.toString(autoDLNr + 1));
+                db.editEntry(currentLN);
+                db.writeToFile();
+            }
 //            replace.replaceChars(file);
 
 
+        }
+    }
+
+    private LNEntry getDBEntry() {
+        LNEntry returnEntry = null;
+        String input;
+        while(returnEntry == null){
+            System.out.print("Option (search): ");
+            input = new Scanner(System.in).nextLine();
+            switch (input){
+                case "help":
+                    System.out.println("search, list, manual, add");
+                    break;
+                case "search":
+                    returnEntry = useDBSearch();
+                    break;
+                case "list":
+                    System.out.println("not implemented");
+                    break;
+                case "manual":
+                    System.out.println("not implemented");
+                    break;
+                case "add":
+                    addEntryToDB();
+                    break;
+                default:
+                    returnEntry = useDBSearch();
+                    break;
+            }
+        }
+
+
+        return returnEntry;
+    }
+
+    private LNEntry addEntryToDB() {
+        System.out.print("name: ");
+        String name = new Scanner(System.in).nextLine();
+        System.out.println("path: ");
+        String path = new Scanner(System.in).nextLine();
+        System.out.println("currentChapter: ");
+        String currentChapter = new Scanner(System.in).nextLine();
+        LNEntry entry = new LNEntry(name, path, currentChapter);
+        db.addEntry(entry);
+        db.writeToFile();
+        return entry;
+    }
+
+    private LNEntry useDBSearch() {
+        db.readDBFile();
+        String input;
+        System.out.print("Search word: ");
+        input = new Scanner(System.in).nextLine();
+        ArrayList<String> result = db.searchKeys(input);
+        if (result.size() == 1){
+            System.out.println("Found:" + result.get(0));
+            return db.getEntry(result.get(0));
+        }
+        else if (result.size() > 1){
+            for (int i = 0; i < result.size(); i++){
+                System.out.println(i + ". " + result.get(i));
+            }
+            System.out.print("Selection? (0) ");
+            input = new Scanner(System.in).nextLine();
+            try{
+                return db.getEntry(result.get(Integer.parseInt(input)));
+            } catch (NumberFormatException e) {
+                return db.getEntry(result.get(0));
+            }
+        }
+        else{
+            System.out.println("Try again");
+            return useDBSearch();
         }
     }
 
@@ -122,9 +200,14 @@ public class Controller {
         String path = "";
         if (this.autoDLNr < 0){
             String input;
-            System.out.println("First chapter number?:");
+            System.out.println("First chapter number? (" + currentLN.getNextChapter() + ")");
             input = new Scanner(System.in).nextLine();
-            this.autoDLNr = Integer.parseInt(input);
+            try{
+                this.autoDLNr = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Using default: " + currentLN.getNextChapter());
+                this.autoDLNr = Integer.parseInt(currentLN.getNextChapter());
+            }
         }
         else{
             this.autoDLNr ++;
