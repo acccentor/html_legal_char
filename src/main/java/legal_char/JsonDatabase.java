@@ -51,8 +51,8 @@ public class JsonDatabase {
     public LNEntry parseJSON(JSONObject JSONEntry) {
         String name = (String)JSONEntry.get("name");
         String path = (String)JSONEntry.get("path");
-        String currentChapter = (String)JSONEntry.get("currentChapter");
-        LNEntry entry = new LNEntry(name, path, currentChapter);
+        String nextChapter = (String)JSONEntry.get("nextChapter");
+        LNEntry entry = new LNEntry(name, path, nextChapter);
         return  entry;
     }
 
