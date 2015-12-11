@@ -36,8 +36,8 @@ public class Controller {
             url = generateUrl();
 
             try {
-                File file = Download_html.download_html(path, url);
-                replace.replaceChars(file);
+                (new ThreadController(path, url)).run();
+//                replace.replaceChars(file);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -33,11 +33,11 @@ public class Download_html {
         return file;
     }
 
-    public static void main(String args[]){
-        try {
-            Download_html.download_html("D:/google_drive/Dropbox/books/LN/test_project/test_ch-002.html", "https://shinsoritranslations.wordpress.com/2015/07/23/logged-into-a-different-world/");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String args[]){
+//        try {
+//            Download_html.download_html("D:/google_drive/Dropbox/books/LN/test_project/test_ch-002.html", "https://shinsoritranslations.wordpress.com/2015/07/23/logged-into-a-different-world/");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
