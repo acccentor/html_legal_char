@@ -99,7 +99,7 @@ public class Controller {
         input = new Scanner(System.in).nextLine();
         ArrayList<String> result = db.searchKeys(input);
         if (result.size() == 1){
-            System.out.println("Found:" + result.get(0));
+            System.out.println("Found: " + result.get(0));
             return db.getEntry(result.get(0));
         }
         else if (result.size() > 1){
@@ -183,7 +183,7 @@ public class Controller {
                     return clipboard_new;
                 }
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -200,7 +200,7 @@ public class Controller {
         String path = "";
         if (this.autoDLNr < 0){
             String input;
-            System.out.println("First chapter number? (" + currentLN.getNextChapter() + ")");
+            System.out.print("First chapter number? (" + currentLN.getNextChapter() + ")");
             input = new Scanner(System.in).nextLine();
             try{
                 this.autoDLNr = Integer.parseInt(input);

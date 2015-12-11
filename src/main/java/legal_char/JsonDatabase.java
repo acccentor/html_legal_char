@@ -1,5 +1,6 @@
 package legal_char;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -34,7 +35,8 @@ public class JsonDatabase {
         Iterator<String> keys = db.keys();
         while (keys.hasNext()){
             String key = keys.next();
-            if (key.contains(search)){
+            if (StringUtils.containsIgnoreCase(key, search)){
+//            if (key.toLowerCase().contains(search.toLowerCase())){
                 returnList.add(key);
             }
         }
@@ -81,10 +83,6 @@ public class JsonDatabase {
             BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/resources/db.txt"), "UTF-8"));
             returnValue = new JSONObject(in.readLine());
             in.close();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
