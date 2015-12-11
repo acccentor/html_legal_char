@@ -35,12 +35,9 @@ public class Controller {
             path = generatePath(defaultPath);
             url = generateUrl();
 
-            try {
-                (new ThreadController(path, url)).run();
-//                replace.replaceChars(file);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            (new ThreadController(path, url)).run();
+//            replace.replaceChars(file);
+
 
         }
     }
