@@ -31,7 +31,7 @@ public class JsonDatabase {
     }
 
     public ArrayList<String> searchKeys(String search){
-        ArrayList<String> returnList = new ArrayList<String>();
+        ArrayList<String> returnList = new ArrayList<>();
         Iterator<String> keys = db.keys();
         while (keys.hasNext()){
             String key = keys.next();
@@ -54,8 +54,7 @@ public class JsonDatabase {
         String name = (String)JSONEntry.get("name");
         String path = (String)JSONEntry.get("path");
         String nextChapter = (String)JSONEntry.get("nextChapter");
-        LNEntry entry = new LNEntry(name, path, nextChapter);
-        return  entry;
+        return  new LNEntry(name, path, nextChapter);
     }
 
     public String toString(){

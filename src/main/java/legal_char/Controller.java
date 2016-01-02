@@ -55,7 +55,7 @@ public class Controller {
             input = new Scanner(System.in).nextLine();
             switch (input){
                 case "help":
-                    System.out.println("search, list, manual, add");
+                    System.out.println("search, list, manual, add, set_ch");
                     break;
                 case "search":
                     returnEntry = useDBSearch();
@@ -69,6 +69,9 @@ public class Controller {
                 case "add":
                     addEntryToDB();
                     break;
+                case "set_ch":
+                    setChapter();
+                    break;
                 default:
                     returnEntry = useDBSearch();
                     break;
@@ -79,12 +82,31 @@ public class Controller {
         return returnEntry;
     }
 
+    private void setChapter() {
+        LNEntry newEntry = useDBSearch();
+        String input;
+        boolean hasNewCh = false;
+        while (!hasNewCh) {
+            try {
+                System.out.print("New chapter? :");
+                input = new Scanner(System.in).nextLine();
+                Integer.parseInt(input);
+                newEntry.setNextChapter(input);
+                db.editEntry(newEntry);
+                db.writeToFile();
+                hasNewCh = true;
+            } catch (NumberFormatException e) {
+                System.out.println("invalid number");
+            }
+        }
+    }
+
     private LNEntry addEntryToDB() {
         System.out.print("name: ");
         String name = new Scanner(System.in).nextLine();
-        System.out.println("path: ");
+        System.out.print("path: ");
         String path = new Scanner(System.in).nextLine();
-        System.out.println("currentChapter: ");
+        System.out.print("next chapter: ");
         String currentChapter = new Scanner(System.in).nextLine();
         LNEntry entry = new LNEntry(name, path, currentChapter);
         db.addEntry(entry);
@@ -200,7 +222,7 @@ public class Controller {
         String path = "";
         if (this.autoDLNr < 0){
             String input;
-            System.out.print("First chapter number? (" + currentLN.getNextChapter() + ")");
+            System.out.print("First chapter number? (" + currentLN.getNextChapter() + "):");
             input = new Scanner(System.in).nextLine();
             try{
                 this.autoDLNr = Integer.parseInt(input);
@@ -220,7 +242,7 @@ public class Controller {
     }
 
     private String manual_dl(){
-        System.out.println("url?");
+        System.out.print("Url: ");
         return new Scanner(System.in).nextLine();
     }
 
